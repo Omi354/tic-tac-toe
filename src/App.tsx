@@ -18,11 +18,20 @@ const Square: React.FC<squareProps> = ({ value, onSquareClick }) => {
 // X>O>X>Oにする。そのためには次がどっちなのかを都度判定する必要がある。
 
 const Board = () => {
+  // 盤面の状態を保存
   const [squares, setSquares] = useState(Array(9).fill(null));
+  // 次のプレイヤー状態を保存
+  const [isXNext, setIsXNext] = useState(true);
+
+  // マスをクリックしたときに動く関数
   const onSquareClick = (i: number) => {
+    if (squares[i] !== null) {
+      return;
+    }
     const newSquares = squares.slice();
-    newSquares[i] = "X";
+    newSquares[i] = isXNext ? "X" : "O";
     setSquares(newSquares);
+    setIsXNext(!isXNext);
   };
 
   return (
